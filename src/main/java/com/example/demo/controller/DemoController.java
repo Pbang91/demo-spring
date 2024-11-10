@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class DemoController {
@@ -27,5 +28,39 @@ public class DemoController {
         model.addAttribute("name", name);
 
         return "demo-template";
+    }
+
+    @GetMapping("/demo-str")
+    @ResponseBody
+    public String whatStr(@RequestParam(value = "n", required = true) String name) {
+        /*
+         @ResponseBody를 사용하면  ViewResolver 대신 HttpMessageConverter 동작
+         기본 문차처리: StringHttpMessageConverter
+         기본 객체처리: MappingJsckson2HttpMessageConverter
+         */
+
+        return "name is " + name;
+    }
+
+    @GetMapping("/demo-json")
+    @ResponseBody
+    public JJ whatJson(@RequestParam(value = "n", required = true) String name) {
+        JJ jj = new JJ();
+
+        jj.setName(name);
+
+        return jj;
+    }
+
+    public class JJ {
+        private String name;
+
+        public String getName() {
+            return this.name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
     }
 }
