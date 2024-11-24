@@ -2,8 +2,7 @@ package com.example.demo.domain.member.service;
 
 import com.example.demo.domain.member.entity.Member;
 import com.example.demo.domain.member.repository.MemberRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +29,7 @@ public class MemberServiceImpl implements MemberService {
     /**
      * 회원가입
      */
+    @Transactional
     public Long join(Member member) {
         validateDuplicatedMember(member);
         memberRepository.save(member);
@@ -43,7 +43,7 @@ public class MemberServiceImpl implements MemberService {
      * @return
      */
     public List<Member> findMembers() {
-        return memberRepository.findALl();
+        return memberRepository.findAll();
     }
 
     /**
